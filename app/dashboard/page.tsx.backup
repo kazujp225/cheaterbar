@@ -1,0 +1,209 @@
+'use client'
+
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAuth } from '@/lib/auth-context'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Calendar, Users, MessageSquare, Settings, CreditCard, CalendarPlus } from 'lucide-react'
+import Link from 'next/link'
+
+export default function DashboardPage() {
+  const { user, profile, membership, loading } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/auth/login')
+    }
+  }, [user, loading, router])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
+
+  if (!user || !profile) {
+    return null
+  }
+
+  const membershipTierColors = {
+    bronze: 'bg-orange-500',
+    silver: 'bg-gray-400',
+    gold: 'bg-yellow-500',
+    platinum: 'bg-purple-500'
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-background to-secondary">
+      <div className="container mx-auto py-8 px-4">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">
+            ようこそ、{profile.full_name}さん
+          </h1>
+          <div className="flex items-center gap-4">
+            <Badge variant={membership?.type === 'paid' ? 'default' : 'secondary'}>
+              {membership?.type === 'paid' ? '有料会員' : '無料会員'}
+            </Badge>
+            {membership && (
+              <Badge className={membershipTierColors[membership.tier]}>
+                {membership.tier.toUpperCase()}
+              </Badge>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+            <Link href="/visit-plans">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  来店予定
+                </CardTitle>
+                <Calendar className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">今週の来店者</div>
+                <p className="text-xs text-muted-foreground">
+                  誰が来るか確認して、ネットワーキングの準備をしましょう
+                </p>
+              </CardContent>
+            </Link>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+            <Link href="/visit-plans/new">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  来店予定を登録
+                </CardTitle>
+                <CalendarPlus className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">新規登録</div>
+                <p className="text-xs text-muted-foreground">
+                  あなたの来店予定を登録して、他の会員に知らせましょう
+                </p>
+              </CardContent>
+            </Link>
+          </Card>
+
+          <Card className={`hover:shadow-lg transition-shadow ${membership?.type === 'paid' ? 'cursor-pointer' : 'opacity-50'}`}>
+            <Link href={membership?.type === 'paid' ? '/matching' : '#'}>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  マッチング
+                </CardTitle>
+                <Users className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {membership?.type === 'paid' ? '新しいつながり' : '有料会員限定'}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {membership?.type === 'paid' 
+                    ? '気になる会員に「一緒に飲みたい」リクエストを送信'
+                    : '有料会員になってマッチング機能を利用しましょう'
+                  }
+                </p>
+              </CardContent>
+            </Link>
+          </Card>
+
+          {membership?.type === 'paid' && (
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+              <Link href="/matching/requests">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    マッチングリクエスト
+                  </CardTitle>
+                  <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">管理</div>
+                  <p className="text-xs text-muted-foreground">
+                    送信・受信したリクエストを確認
+                  </p>
+                </CardContent>
+              </Link>
+            </Card>
+          )}
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+            <Link href="/events">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  イベント
+                </CardTitle>
+                <MessageSquare className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">開催予定</div>
+                <p className="text-xs text-muted-foreground">
+                  ピッチイベントや交流会の情報をチェック
+                </p>
+              </CardContent>
+            </Link>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+            <Link href="/profile">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  プロフィール
+                </CardTitle>
+                <Settings className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">設定</div>
+                <p className="text-xs text-muted-foreground">
+                  プロフィールや通知設定を管理
+                </p>
+              </CardContent>
+            </Link>
+          </Card>
+
+          {membership?.type === 'free' && (
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer border-primary">
+              <Link href="/membership/upgrade">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium text-primary">
+                    有料会員にアップグレード
+                  </CardTitle>
+                  <CreditCard className="h-4 w-4 text-primary" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-primary">月額5,000円</div>
+                  <p className="text-xs text-muted-foreground">
+                    マッチング機能やVIPイベントへのアクセスを解放
+                  </p>
+                </CardContent>
+              </Link>
+            </Card>
+          )}
+        </div>
+
+        {/* 最近のアクティビティ */}
+        <Card>
+          <CardHeader>
+            <CardTitle>最近のアクティビティ</CardTitle>
+            <CardDescription>
+              あなたの最近の活動履歴
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="text-sm text-muted-foreground">
+                まだアクティビティがありません。来店予定を登録したり、イベントに参加してみましょう！
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}
