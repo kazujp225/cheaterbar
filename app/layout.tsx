@@ -12,9 +12,35 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "CHEETAH BAR - Startup minds gather, ideas sprint.",
-  description: "Futuristic night lounge for entrepreneurs and innovators. Produced by Kaigyo Cheetah.",
-    generator: 'v0.dev'
+  title: "CHEETAH BAR - 開業チーター | 起業家のための会員制バー",
+  description: "麻布十番の起業家・イノベーター向け会員制バー。開業チータープロデュース。ネットワーキング、マッチング、イベント開催。",
+  generator: 'Next.js',
+  keywords: ['開業チーター', 'CHEETAH BAR', '起業家', 'バー', '麻布十番', 'ネットワーキング', 'スタートアップ'],
+  authors: [{ name: '開業チーター' }],
+  openGraph: {
+    title: 'CHEETAH BAR - 開業チーター',
+    description: '起業家のための会員制バー',
+    type: 'website',
+    locale: 'ja_JP',
+    siteName: 'CHEETAH BAR',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'CHEETAH BAR - 開業チーター',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CHEETAH BAR - 開業チーター',
+    description: '起業家のための会員制バー',
+  },
+  icons: {
+    icon: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
@@ -25,6 +51,8 @@ export default function RootLayout({
   return (
     <html lang="ja" suppressHydrationWarning>
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#0077FF" />
         <style
           dangerouslySetInnerHTML={{
             __html: `
