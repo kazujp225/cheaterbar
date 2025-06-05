@@ -12,7 +12,7 @@ import { ArrowRight, Award, Users, Zap, Target, Linkedin, Twitter } from "lucide
 const founder = {
   name: "林 尚弘",
   title: "開業チーター / CHEETAH BAR オーナー",
-  image: "/placeholder.svg?height=600&width=500",
+  image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
   bio: "令和の虎として知られる起業家。開業支援サービス「開業チーター」を運営し、これまでに1000社以上の起業をサポート。CHEETAH BARは、起業家同士のリアルな交流の場として2023年に開業。",
   achievements: [
     "開業チーター創業者",
@@ -84,14 +84,14 @@ const team = [
   }
 ]
 
-// メディア掲載実績
+// メディア掲載実績（テキストのみで表示）
 const mediaLogos = [
-  { name: "日経新聞", logo: "/placeholder.svg?height=60&width=120" },
-  { name: "TechCrunch", logo: "/placeholder.svg?height=60&width=120" },
-  { name: "Forbes Japan", logo: "/placeholder.svg?height=60&width=120" },
-  { name: "NewsPicks", logo: "/placeholder.svg?height=60&width=120" },
-  { name: "ダイヤモンド", logo: "/placeholder.svg?height=60&width=120" },
-  { name: "東洋経済", logo: "/placeholder.svg?height=60&width=120" }
+  { name: "日経新聞", displayName: "日本経済新聞" },
+  { name: "TechCrunch", displayName: "TechCrunch Japan" },
+  { name: "Forbes Japan", displayName: "Forbes JAPAN" },
+  { name: "NewsPicks", displayName: "NewsPicks" },
+  { name: "ダイヤモンド", displayName: "週刊ダイヤモンド" },
+  { name: "東洋経済", displayName: "東洋経済オンライン" }
 ]
 
 // 数字で見る実績
@@ -124,12 +124,12 @@ const successStories = [
   }
 ]
 
-// パートナー企業
+// パートナー企業（テキストのみで表示）
 const partners = [
-  { name: "開業チーター", logo: "/placeholder.svg?height=80&width=160" },
-  { name: "ベンチャーキャピタルA", logo: "/placeholder.svg?height=80&width=160" },
-  { name: "アクセラレーターB", logo: "/placeholder.svg?height=80&width=160" },
-  { name: "メガバンクC", logo: "/placeholder.svg?height=80&width=160" }
+  { name: "開業チーター", type: "主催" },
+  { name: "SBIベンチャーキャピタル", type: "VC" },
+  { name: "Plug and Play Japan", type: "アクセラレーター" },
+  { name: "三菱UFJ銀行", type: "金融機関" }
 ]
 
 export default function AboutPage() {
@@ -450,23 +450,21 @@ export default function AboutPage() {
             <div className="w-20 h-1 bg-primary mx-auto" />
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {mediaLogos.map((media, index) => (
               <motion.div
                 key={media.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="flex items-center justify-center"
+                className="text-center"
               >
-                <Image
-                  src={media.logo}
-                  alt={media.name}
-                  width={120}
-                  height={60}
-                  className="opacity-60 hover:opacity-100 transition-opacity duration-300 filter grayscale hover:grayscale-0"
-                />
+                <Card className="p-6 h-full bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    {media.displayName}
+                  </h3>
+                </Card>
               </motion.div>
             ))}
           </div>
@@ -490,7 +488,7 @@ export default function AboutPage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {partners.map((partner, index) => (
               <motion.div
                 key={partner.name}
@@ -498,15 +496,17 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex items-center justify-center p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
-                <Image
-                  src={partner.logo}
-                  alt={partner.name}
-                  width={160}
-                  height={80}
-                  className="opacity-70 hover:opacity-100 transition-opacity duration-300"
-                />
+                <Card className="p-8 h-full bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:shadow-xl transition-shadow">
+                  <div className="text-center">
+                    <Badge className="mb-3 bg-primary/10 text-primary border-primary/20">
+                      {partner.type}
+                    </Badge>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                      {partner.name}
+                    </h3>
+                  </div>
+                </Card>
               </motion.div>
             ))}
           </div>
