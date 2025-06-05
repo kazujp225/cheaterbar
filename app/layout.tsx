@@ -54,6 +54,9 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#0077FF" />
+        {/* Preload critical images */}
+        <link rel="preload" as="image" href="https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?q=90&w=1920&auto=format&fit=crop" />
+        <link rel="preload" as="image" href="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=90&w=2000&auto=format&fit=crop" />
         <style
           dangerouslySetInnerHTML={{
             __html: `

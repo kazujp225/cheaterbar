@@ -11,6 +11,7 @@ import {
   Wine, Coffee, Beer, Martini, Utensils, Cake, Star, Clock, 
   Users, Leaf, Download, ChevronRight, Info
 } from "lucide-react"
+import { getOptimizedImageUrl, getBlurDataURL } from "@/lib/image-utils"
 
 // 無料ドリンク
 const freeDrinks = {
@@ -51,7 +52,7 @@ const paidDrinks = {
       description: "ジン、ブルーキュラソー、レモン、ソーダ",
       ingredients: ["ジン", "ブルーキュラソー", "レモン", "ソーダ"],
       tags: ["人気", "爽快"],
-      image: "https://images.unsplash.com/photo-1536935338788-846bb9981813?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1536935338788-846bb9981813", 800)
     },
     {
       name: "STARTUP SPRITZ", 
@@ -60,7 +61,7 @@ const paidDrinks = {
       description: "プロセッコ、アペロール、ソーダ",
       ingredients: ["プロセッコ", "アペロール", "ソーダ"],
       tags: ["華やか"],
-      image: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1551538827-9c037cb4f32a", 800)
     },
     {
       name: "INNOVATOR'S MANHATTAN",
@@ -69,7 +70,7 @@ const paidDrinks = {
       description: "ライウイスキー、スイートベルモット、ビターズ",
       ingredients: ["ライウイスキー", "スイートベルモット", "ビターズ"],
       tags: ["クラシック"],
-      image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b", 800)
     },
     {
       name: "UNICORN MOJITO",
@@ -78,7 +79,7 @@ const paidDrinks = {
       description: "ラム、ミント、ライム、エディブルフラワー",
       ingredients: ["ラム", "ミント", "ライム", "エディブルフラワー"],
       tags: ["限定", "インスタ映え"],
-      image: "https://images.unsplash.com/photo-1587888637140-849b25d80ef9?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1587888637140-849b25d80ef9", 800)
     }
   ],
   premium: [
@@ -139,28 +140,28 @@ const foodMenu = {
       price: "¥2,800",
       description: "3種のチーズ、ナッツ、ドライフルーツ",
       tags: ["人気", "シェア"],
-      image: "https://images.unsplash.com/photo-1486297678162-eb2a19b7c32d?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1486297678162-eb2a19b7c32d", 800)
     },
     {
       name: "起業家の枝豆",
       price: "¥800",
       description: "ガーリック風味の枝豆",
       tags: ["ベジタリアン"],
-      image: "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1594736797933-d0501ba2fe65", 800)
     },
     {
       name: "スタートアップ・ナチョス",
       price: "¥1,200",
       description: "自家製サルサ、ワカモレ",
       tags: ["シェア"],
-      image: "https://images.unsplash.com/photo-1613514785940-daed07799d9b?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1613514785940-daed07799d9b", 800)
     },
     {
       name: "ミックスナッツ",
       price: "¥800",
       description: "スモーク風味の特製ブレンド",
       tags: ["ベジタリアン"],
-      image: "https://images.unsplash.com/photo-1599599810694-b5b37304c041?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1599599810694-b5b37304c041", 800)
     }
   ],
   tapas: [
@@ -169,28 +170,28 @@ const foodMenu = {
       price: "¥1,500",
       description: "3種の創作ブルスケッタ",
       tags: ["人気"],
-      image: "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1572695157366-5e585ab2b69f", 800)
     },
     {
       name: "ピッチ・プロシュート",
       price: "¥1,800",
       description: "生ハムとメロン",
       tags: [],
-      image: "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba", 800)
     },
     {
       name: "ベンチャー・春巻き",
       price: "¥1,400",
       description: "海老とアボカドの生春巻き",
       tags: ["ヘルシー"],
-      image: "https://images.unsplash.com/photo-1609501676725-7186f017a4b7?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1609501676725-7186f017a4b7", 800)
     },
     {
       name: "IPOポテト",
       price: "¥1,200",
       description: "トリュフ風味のフライドポテト",
       tags: ["人気"],
-      image: "https://images.unsplash.com/photo-1576107232684-1279f390859f?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1576107232684-1279f390859f", 800)
     }
   ],
   mains: [
@@ -199,28 +200,28 @@ const foodMenu = {
       price: "¥8,500",
       description: "和牛サーロイン150g",
       tags: ["プレミアム", "肉料理"],
-      image: "https://images.unsplash.com/photo-1558030006-450675393462?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1558030006-450675393462", 800)
     },
     {
       name: "スケールアップ・パスタ",
       price: "¥2,200",
       description: "本日のシェフ特製パスタ",
       tags: ["日替わり"],
-      image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9", 800)
     },
     {
       name: "ピボット・ピザ",
       price: "¥2,400",
       description: "日替わり創作ピザ",
       tags: ["日替わり"],
-      image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1565299624946-b28f40a0ae38", 800)
     },
     {
       name: "エグジット・リゾット",
       price: "¥2,600",
       description: "シーフードリゾット",
       tags: ["魚介"],
-      image: "https://images.unsplash.com/photo-1633337474564-1d9478ca4e2e?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1633337474564-1d9478ca4e2e", 800)
     }
   ],
   desserts: [
@@ -229,21 +230,21 @@ const foodMenu = {
       price: "¥800",
       description: "本日のケーキ",
       tags: ["日替わり"],
-      image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1565958011703-44f9829ba187", 800)
     },
     {
       name: "ネクストステージ・ジェラート",
       price: "¥1,000",
       description: "3種盛り合わせ",
       tags: ["人気"],
-      image: "https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1567206563064-6f60f40a2b57", 800)
     },
     {
       name: "ブレイクスルー・ブリュレ",
       price: "¥900",
       description: "クレームブリュレ",
       tags: ["人気"],
-      image: "https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc?q=80&w=800&auto=format&fit=crop"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc", 800)
     }
   ]
 }
@@ -294,14 +295,14 @@ const seasonalItems = [
     price: "¥1,800〜",
     description: "桜の香りを楽しむ春限定カクテル",
     season: "春限定（3-5月）",
-    image: "https://images.unsplash.com/photo-1560526860-1f0e56046c85?q=80&w=800&auto=format&fit=crop"
+    image: getOptimizedImageUrl("https://images.unsplash.com/photo-1560526860-1f0e56046c85", 800)
   },
   {
     name: "春野菜のタパス",
     price: "¥1,500〜",
     description: "旬の春野菜を使った特別メニュー",
     season: "春限定（3-5月）",
-    image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=800&auto=format&fit=crop"
+    image: getOptimizedImageUrl("https://images.unsplash.com/photo-1540189549336-e6e99c3679fe", 800)
   }
 ]
 
@@ -315,10 +316,14 @@ export default function MenuPage() {
       <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?q=80&w=3469&auto=format&fit=crop"
+            src={getOptimizedImageUrl("https://images.unsplash.com/photo-1470337458703-46ad1756a187", 1920, 80)}
             alt="Premium bar setting"
             fill
             className="object-cover opacity-30"
+            priority={true}
+            loading="eager"
+            placeholder="blur"
+            blurDataURL={getBlurDataURL()}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/70 to-black" />
         </div>
@@ -510,6 +515,10 @@ export default function MenuPage() {
                             alt={cocktail.name}
                             fill
                             className="object-cover group-hover:scale-110 transition-transform duration-700"
+                            priority={index < 4}
+                            loading={index < 4 ? "eager" : "lazy"}
+                            placeholder="blur"
+                            blurDataURL={getBlurDataURL()}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                           <div className="absolute top-4 right-4 flex gap-2">
@@ -614,6 +623,9 @@ export default function MenuPage() {
                               alt={item.name}
                               fill
                               className="object-cover"
+                              loading="lazy"
+                              placeholder="blur"
+                              blurDataURL={getBlurDataURL()}
                             />
                           </div>
                           <div className="p-6">
@@ -656,6 +668,9 @@ export default function MenuPage() {
                               alt={item.name}
                               fill
                               className="object-cover"
+                              loading="lazy"
+                              placeholder="blur"
+                              blurDataURL={getBlurDataURL()}
                             />
                           </div>
                           <div className="p-6">
@@ -755,6 +770,9 @@ export default function MenuPage() {
                             alt={item.name}
                             fill
                             className="object-cover"
+                            loading="lazy"
+                            placeholder="blur"
+                            blurDataURL={getBlurDataURL()}
                           />
                         </div>
                         <div className="p-6">
@@ -872,6 +890,9 @@ export default function MenuPage() {
                       alt={item.name}
                       fill
                       className="object-cover"
+                      loading="lazy"
+                      placeholder="blur"
+                      blurDataURL={getBlurDataURL()}
                     />
                     <Badge className="absolute top-4 left-4 bg-primary text-white">
                       {item.season}

@@ -10,6 +10,7 @@ import { ArrowRight, Sparkles, Clock, MapPin, Calendar, Users, Star, TrendingUp,
 import Image from "next/image"
 import { useRef, useState, useEffect } from "react"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { getBlurDataURL, getOptimizedImageUrl } from "@/lib/image-utils"
 
 export default function Home() {
   const containerRef = useRef(null)
@@ -30,21 +31,21 @@ export default function Home() {
       title: "Concept",
       subtitle: "起業家の加速装置",
       content: "アイデアがスプリントする場所",
-      image: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=2000"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1514933651103-005eec06c04b", 2000, 80)
     },
     {
       id: "experience",
       title: "Experience",
       subtitle: "特別な体験",
       content: "ネットワーキングを超えた出会い",
-      image: "https://images.unsplash.com/photo-1541532713592-79a0317b6b77?q=80&w=2000"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1541532713592-79a0317b6b77", 2000, 80)
     },
     {
       id: "membership",
       title: "Membership",
       subtitle: "会員制度",
       content: "選ばれた起業家のための空間",
-      image: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=2000"
+      image: getOptimizedImageUrl("https://images.unsplash.com/photo-1503899036084-c55cdd92da26", 2000, 80)
     }
   ]
 
@@ -79,6 +80,9 @@ export default function Home() {
                     fill
                     className="object-cover"
                     priority={index === 0}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    placeholder="blur"
+                    blurDataURL={getBlurDataURL()}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
                 </div>
@@ -152,11 +156,14 @@ export default function Home() {
               style={{ scale }}
             >
               <Image
-                src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=3474"
+                src={getOptimizedImageUrl("https://images.unsplash.com/photo-1514933651103-005eec06c04b", 3474, 80)}
                 alt="Premium bar interior"
                 fill
                 className="object-cover"
-                priority
+                priority={true}
+                loading="eager"
+                placeholder="blur"
+                blurDataURL={getBlurDataURL()}
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-amber-500/5" />
@@ -249,28 +256,28 @@ export default function Home() {
                   subtitle: "シグネチャーカクテル",
                   description: "起業家の情熱を表現する創作カクテル",
                   price: "¥1,800〜",
-                  image: "https://images.unsplash.com/photo-1536935338788-846bb9981813?q=80&w=800"
+                  image: getOptimizedImageUrl("https://images.unsplash.com/photo-1536935338788-846bb9981813", 800, 80)
                 },
                 {
                   title: "Premium Selection",
                   subtitle: "プレミアムセレクション",
                   description: "世界の名酒を厳選",
                   price: "¥2,000〜",
-                  image: "https://images.unsplash.com/photo-1569924995012-c4c706bfcd51?q=80&w=800"
+                  image: getOptimizedImageUrl("https://images.unsplash.com/photo-1569924995012-c4c706bfcd51", 800, 80)
                 },
                 {
                   title: "Tapas & Bites",
                   subtitle: "タパス＆バイツ",
                   description: "会話を彩る創作料理",
                   price: "¥1,200〜",
-                  image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800"
+                  image: getOptimizedImageUrl("https://images.unsplash.com/photo-1555939594-58d7cb561ad1", 800, 80)
                 },
                 {
                   title: "Member's Special",
                   subtitle: "会員限定メニュー",
                   description: "会員だけの特別な一品",
                   price: "Ask",
-                  image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=800"
+                  image: getOptimizedImageUrl("https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b", 800, 80)
                 }
               ].map((item, index) => (
                 <motion.div
@@ -288,6 +295,9 @@ export default function Home() {
                         alt={item.title}
                         fill
                         className="object-cover group-hover:scale-110 transition-transform duration-700"
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL={getBlurDataURL()}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                       <div className="absolute bottom-4 left-4 right-4">
@@ -334,10 +344,13 @@ export default function Home() {
       <section id="experience" className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1541532713592-79a0317b6b77?q=80&w=3488"
+            src={getOptimizedImageUrl("https://images.unsplash.com/photo-1541532713592-79a0317b6b77", 3488, 80)}
             alt="Networking event"
             fill
             className="object-cover"
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL={getBlurDataURL()}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/80 to-black/90" />
         </div>
@@ -426,10 +439,13 @@ export default function Home() {
             <div className={`${isMobile ? 'space-y-8' : 'grid md:grid-cols-2 gap-12'} items-center`}>
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=3474"
+                  src={getOptimizedImageUrl("https://images.unsplash.com/photo-1503899036084-c55cdd92da26", 3474, 80)}
                   alt="Tokyo night view"
                   fill
                   className="object-cover"
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={getBlurDataURL()}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6">

@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { ChevronDown } from "lucide-react"
+import { getBlurDataURL, getOptimizedImageUrl } from "@/lib/image-utils"
 
 export default function Hero() {
   const [currentTime, setCurrentTime] = useState("00:00")
@@ -41,12 +42,14 @@ export default function Hero() {
         style={{ y }}
       >
         <Image
-          src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=3474"
+          src={getOptimizedImageUrl("https://images.unsplash.com/photo-1514933651103-005eec06c04b", 3474, 90)}
           alt="CHEETAH BAR Interior"
           fill
           className="object-cover scale-110"
-          priority
-          quality={100}
+          priority={true}
+          loading="eager"
+          placeholder="blur"
+          blurDataURL={getBlurDataURL()}
         />
         {/* Dynamic Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/90" />

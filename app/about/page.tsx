@@ -7,12 +7,13 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Award, Users, Zap, Target, Linkedin, Twitter } from "lucide-react"
+import { getBlurDataURL, getOptimizedImageUrl } from "@/lib/image-utils"
 
 // 創業者情報
 const founder = {
   name: "林 尚弘",
   title: "開業チーター / CHEETAH BAR オーナー",
-  image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
+  image: getOptimizedImageUrl("https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d", 800, 80),
   bio: "令和の虎として知られる起業家。開業支援サービス「開業チーター」を運営し、これまでに1000社以上の起業をサポート。CHEETAH BARは、起業家同士のリアルな交流の場として2023年に開業。",
   achievements: [
     "開業チーター創業者",
@@ -32,7 +33,7 @@ const team = [
     name: "林 尚弘",
     nameReading: "はやし なおひろ",
     role: "株式会社FCチャンネル 代表取締役",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop",
+    image: getOptimizedImageUrl("https://images.unsplash.com/photo-1560250097-0b93528c311a", 800, 80),
     bio: "「授業をしない」武田塾を創業し、フランチャイズ展開により全国400校舎、年商130億円を達成。フランチャイズ展開と顧問業を通じて、教育業界に革新をもたらす。",
     achievements: [
       "武田塾創業者",
@@ -50,7 +51,7 @@ const team = [
     name: "山﨑 俊",
     nameReading: "やまざき しゅん",
     role: "株式会社Wiz 代表取締役社長",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop", 
+    image: getOptimizedImageUrl("https://images.unsplash.com/photo-1519085360753-af0119f7cbe7", 800, 80), 
     bio: "2012年に株式会社Wizを設立し、IT・通信、ビジネスサポート、メディアなど多岐にわたる事業を展開。2025年4月にMS&Consultingと資本業務提携。",
     achievements: [
       "営業利益9.4億円（前年比264.8％増）",
@@ -68,7 +69,7 @@ const team = [
     name: "清水 望",
     nameReading: "しみず のぞむ",
     role: "株式会社ラストワンマイル 代表取締役社長",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=800&auto=format&fit=crop",
+    image: getOptimizedImageUrl("https://images.unsplash.com/photo-1472099645785-5658abf4ff4e", 800, 80),
     bio: "光通信での経験を経て、2011年に株式会社U-MXを設立。コールセンター事業からインサイドセールスへと事業を拡大。2023年プレミアムウォーターHDへのバイアウトを実現。",
     achievements: [
       "営業利益2.1億円（前年比276.5％増）",
@@ -139,10 +140,13 @@ export default function AboutPage() {
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=3501&auto=format&fit=crop"
+            src={getOptimizedImageUrl("https://images.unsplash.com/photo-1497366216548-37526070297c", 3501, 80)}
             alt="Premium office space"
             fill
             className="object-cover opacity-20"
+            priority={true}
+            placeholder="blur"
+            blurDataURL={getBlurDataURL()}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black" />
         </div>
@@ -193,6 +197,9 @@ export default function AboutPage() {
                   width={300}
                   height={360}
                   className="object-cover w-full"
+                  loading="eager"
+                  placeholder="blur"
+                  blurDataURL={getBlurDataURL()}
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                   <h3 className="text-xl font-bold text-white mb-1">{founder.name}</h3>
@@ -327,6 +334,9 @@ export default function AboutPage() {
                       alt={member.name}
                       fill
                       className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                      loading="lazy"
+                      placeholder="blur"
+                      blurDataURL={getBlurDataURL()}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     
