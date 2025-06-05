@@ -12,6 +12,7 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://cheaterbar.com'),
   title: "CHEETAH BAR - 開業チーター | 起業家のための会員制バー",
   description: "麻布十番の起業家・イノベーター向け会員制バー。開業チータープロデュース。ネットワーキング、マッチング、イベント開催。",
   generator: 'Next.js',
