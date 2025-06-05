@@ -7,6 +7,7 @@ import Footer from "@/components/Footer" // Import Footer
 import { ThemeProvider } from "@/components/theme-provider" // Assuming you have this
 import ScrollIndicator from "@/components/ScrollIndicator"
 import { AuthProvider } from "@/lib/auth-context"
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -23,7 +24,35 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" suppressHydrationWarning>
-      <body className={`${inter.className} bg-white dark:bg-secondary text-gray-900 dark:text-white transition-colors duration-300`}>
+      <head>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              /* Critical CSS for initial render */
+              * { margin: 0; padding: 0; box-sizing: border-box; }
+              html { scroll-behavior: smooth; }
+              body { min-height: 100vh; }
+              .dark { background-color: #000; color: #fff; }
+              .dark body { background-color: #000; }
+            `,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('theme') || 'dark';
+                if (theme === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark');
+                  document.documentElement.style.backgroundColor = '#000';
+                  document.documentElement.style.color = '#fff';
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
+      <body className={`${inter.className} bg-white dark:bg-secondary text-gray-900 dark:text-white transition-colors duration-300`} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -40,6 +69,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            <Toaster />
           </AuthProvider>
         </ThemeProvider>
       </body>

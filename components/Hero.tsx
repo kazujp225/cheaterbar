@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import { ChevronDown } from "lucide-react"
 
 export default function Hero() {
-  const [currentTime, setCurrentTime] = useState("")
+  const [currentTime, setCurrentTime] = useState("00:00")
   const [isLoaded, setIsLoaded] = useState(false)
   const { scrollY } = useScroll()
   const y = useTransform(scrollY, [0, 500], [0, 150])

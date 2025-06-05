@@ -49,6 +49,7 @@ const NavLink: React.FC<NavLinkProps> = ({ href, label }) => {
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const { user, profile, signOut } = useAuth()
   const pathname = usePathname()
 
@@ -63,6 +64,7 @@ export default function Header() {
   ]
 
   useEffect(() => {
+    setIsMounted(true)
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
     }
@@ -97,7 +99,7 @@ export default function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
-          <ThemeToggle />
+          {isMounted && <ThemeToggle />}
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -151,7 +153,7 @@ export default function Header() {
 
         {/* Mobile Menu Button and Theme Toggle */}
         <div className="md:hidden flex items-center gap-2">
-          <ThemeToggle />
+          {isMounted && <ThemeToggle />}
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)} 
             className="text-gray-900 dark:text-white p-3 -mr-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"

@@ -66,7 +66,12 @@ export default function ScrollIndicator() {
   }, [])
 
   if (!mounted) {
-    return null
+    // Return a placeholder with the same dimensions to prevent layout shift
+    return (
+      <div className="fixed right-2 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
+        <nav className="relative w-20 h-40" />
+      </div>
+    )
   }
 
   return (

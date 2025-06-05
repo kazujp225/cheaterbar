@@ -8,6 +8,7 @@ html {
   scroll-padding-top: 5rem; /* Account for fixed header */
 }
 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
