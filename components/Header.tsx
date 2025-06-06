@@ -46,6 +46,7 @@ export default function Header() {
     { href: "/about", label: "私たちについて" },
     { href: "/menu", label: "メニュー" },
     { href: "/events", label: "イベント" },
+    { href: "/blog", label: "ブログ" },
     { href: "/access", label: "アクセス" },
     { href: "/contact", label: "お問い合わせ" },
   ]

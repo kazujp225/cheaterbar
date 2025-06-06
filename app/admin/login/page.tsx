@@ -24,7 +24,7 @@ export default function AdminLoginPage() {
 
     try {
       if (login(username, password)) {
-        router.push("/admin/events")
+        router.push("/admin")
       } else {
         setError("ユーザー名またはパスワードが正しくありません")
       }
