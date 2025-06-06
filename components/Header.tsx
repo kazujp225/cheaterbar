@@ -6,19 +6,9 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { MenuIcon, XIcon, User, LogOut } from "lucide-react"
+import { MenuIcon, XIcon } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ThemeToggle } from "@/components/ThemeToggle"
-import { useAuth } from "@/lib/auth-context"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface NavLinkProps {
   href: string
@@ -50,15 +40,12 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
-  const { user, profile, signOut } = useAuth()
   const pathname = usePathname()
 
   const navItems = [
     { href: "/about", label: "私たちについて" },
     { href: "/menu", label: "メニュー" },
-    { href: "/membership", label: "会員制度" },
     { href: "/events", label: "イベント" },
-    { href: "/reserve", label: "予約" },
     { href: "/access", label: "アクセス" },
     { href: "/contact", label: "お問い合わせ" },
   ]
@@ -100,55 +87,15 @@ export default function Header() {
 
         <div className="hidden md:flex items-center gap-4">
           {isMounted && <ThemeToggle />}
-          {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={profile?.avatar_url || ''} alt={profile?.full_name || ''} />
-                    <AvatarFallback>{profile?.full_name?.charAt(0) || 'U'}</AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" forceMount>
-                <DropdownMenuLabel className="font-normal">
-                  <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">{profile?.full_name}</p>
-                    <p className="text-xs leading-none text-muted-foreground">
-                      {profile?.email}
-                    </p>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/mypage">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>マイページ</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/profile">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>プロフィール</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => signOut()}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>ログアウト</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Link href="/auth/login">
-              <Button
-                className="relative overflow-hidden bg-primary px-6 py-2 text-sm font-light uppercase tracking-wider text-white transition-all duration-300 hover:bg-primary/90 hover:shadow-premium rounded-full hover:scale-105 active:scale-95"
-                size="sm"
-              >
-                <span className="relative z-10">ログイン</span>
-              </Button>
-            </Link>
-          )}
+          <Link href="/admin/login">
+            <Button
+              variant="ghost"
+              className="text-sm font-light uppercase tracking-wider"
+              size="sm"
+            >
+              管理者
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile Menu Button and Theme Toggle */}
@@ -201,36 +148,14 @@ export default function Header() {
                 transition={{ delay: navItems.length * 0.05 }}
                 className="pt-4 space-y-3"
               >
-                {user ? (
-                  <>
-                    <Link href="/mypage" onClick={() => setIsMenuOpen(false)}>
-                      <Button
-                        variant="outline"
-                        className="w-full max-w-xs rounded-full px-8 py-6 font-light uppercase tracking-wider text-base min-h-[48px]"
-                      >
-                        マイページ
-                      </Button>
-                    </Link>
-                    <Button
-                      onClick={() => {
-                        signOut()
-                        setIsMenuOpen(false)
-                      }}
-                      variant="ghost"
-                      className="w-full max-w-xs rounded-full px-8 py-6 font-light uppercase tracking-wider text-base min-h-[48px]"
-                    >
-                      ログアウト
-                    </Button>
-                  </>
-                ) : (
-                  <Link href="/auth/login" onClick={() => setIsMenuOpen(false)}>
-                    <Button
-                      className="w-full max-w-xs bg-primary text-white hover:bg-primary/90 rounded-full px-8 py-6 font-light uppercase tracking-wider text-base min-h-[48px]"
-                    >
-                      ログイン
-                    </Button>
-                  </Link>
-                )}
+                <Link href="/admin/login" onClick={() => setIsMenuOpen(false)}>
+                  <Button
+                    variant="ghost"
+                    className="w-full max-w-xs rounded-full px-8 py-6 font-light uppercase tracking-wider text-base min-h-[48px]"
+                  >
+                    管理者
+                  </Button>
+                </Link>
               </motion.div>
             </nav>
           </motion.div>
