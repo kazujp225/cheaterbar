@@ -9,12 +9,11 @@ import { motion, useScroll, useTransform } from "framer-motion"
 import { ArrowRight, Sparkles, Clock, MapPin, Calendar, Users, Star, TrendingUp, Zap, ChevronRight } from "lucide-react"
 import Image from "next/image"
 import { useRef, useState, useEffect } from "react"
-import { useIsMobile } from "@/hooks/use-mobile"
 import { getBlurDataURL, getOptimizedImageUrl } from "@/lib/image-utils"
 
 export default function Home() {
   const containerRef = useRef(null)
-  const isMobile = useIsMobile()
+  const [isMobile, setIsMobile] = useState(false)
   const [activeSection, setActiveSection] = useState(0)
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -53,140 +52,110 @@ export default function Home() {
     setActiveSection(index)
   }
 
+  // Handle mobile detection after mount to avoid hydration mismatch
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <main ref={containerRef} className="min-h-screen bg-black text-white">
       <section id="hero">
         <Hero />
       </section>
       
-      {/* Mobile Layout */}
+      {/* Mobile Horizontal Layout */}
       {isMobile ? (
-        <>
-          {/* Mobile Concept Section */}
-          <section className="py-16 bg-gradient-to-b from-black to-gray-900">
-            <div className="container mx-auto px-4">
+        <section className="relative h-screen bg-black">
+          {/* Horizontal Scroll Container */}
+          <div className="flex h-full snap-x snap-mandatory overflow-x-auto scrollbar-hide">
+            {mobileSections.map((section, index) => (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="text-center mb-12"
-              >
-                <Badge className="mb-4 bg-amber-500/20 text-amber-400 border-amber-500/30">
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  Concept
-                </Badge>
-                <h2 className="text-3xl font-bold mb-4 text-white">
-                  起業家の加速装置
-                </h2>
-                <p className="text-lg text-gray-300 leading-relaxed">
-                  アイデアがスプリントする場所。
-                  <br />
-                  最速で成長する起業家たちが集まる、特別な空間。
-                </p>
-              </motion.div>
-              
-              <div className="flex flex-col gap-4 max-w-sm mx-auto">
-                <Link href="/membership">
-                  <Button size="lg" className="w-full bg-amber-600 hover:bg-amber-700 text-black">
-                    会員になる
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </Link>
-                <Link href="/about">
-                  <Button size="lg" variant="outline" className="w-full border-amber-500/50 text-amber-400 hover:bg-amber-500/10">
-                    詳しく見る
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </section>
-
-          {/* Mobile Features */}
-          <section className="py-16 bg-gray-900">
-            <div className="container mx-auto px-4">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="text-center mb-12"
-              >
-                <h2 className="text-2xl font-bold mb-4 text-white">
-                  特別な体験
-                </h2>
-              </motion.div>
-              
-              <div className="space-y-6">
-                {[
-                  {
-                    icon: Crown,
-                    title: "Members Only",
-                    subtitle: "会員制コミュニティ",
-                    description: "厳選された起業家が集う、質の高いプライベート空間"
-                  },
-                  {
-                    icon: Wine,
-                    title: "Premium Events",
-                    subtitle: "限定イベント",
-                    description: "月30回以上の質の高いネットワーキングイベント"
-                  }
-                ].map((feature, index) => (
-                  <motion.div
-                    key={feature.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="bg-black/30 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-600 to-yellow-600 flex items-center justify-center">
-                        <feature.icon className="w-5 h-5 text-black" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-white mb-1">{feature.title}</h3>
-                        <p className="text-amber-500 text-sm mb-2">{feature.subtitle}</p>
-                        <p className="text-gray-400 text-sm">{feature.description}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* Mobile CTA */}
-          <section className="py-16 bg-gradient-to-t from-gray-950 to-gray-900">
-            <div className="container mx-auto px-4 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                key={section.id}
+                className="min-w-full h-full snap-center relative flex items-center"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.6 }}
               >
-                <h2 className="text-2xl font-bold mb-6 text-white">
-                  今こそ、
-                  <span className="text-amber-500">始めましょう</span>
-                </h2>
-                <p className="text-gray-400 mb-8">
-                  限定500名の起業家コミュニティで、
-                  <br />
-                  あなたのビジネスを次のレベルへ。
-                </p>
-                
-                <div className="flex flex-col gap-4 max-w-xs mx-auto">
-                  <Link href="/membership">
-                    <Button size="lg" className="w-full bg-amber-600 hover:bg-amber-700 text-black">
-                      <Crown className="w-4 h-4 mr-2" />
-                      会員登録
-                    </Button>
-                  </Link>
+                {/* Background Image */}
+                <div className="absolute inset-0">
+                  <Image
+                    src={section.image}
+                    alt={section.title}
+                    fill
+                    className="object-cover"
+                    priority={index === 0}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    placeholder="blur"
+                    blurDataURL={getBlurDataURL()}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
                 </div>
+
+                {/* Content */}
+                <div className="relative z-10 px-8 py-20 max-w-lg mx-auto text-center">
+                  <motion.div
+                    initial={{ y: 30, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                  >
+                    <Badge className="mb-4 bg-primary/20 text-primary border-primary/30">
+                      {section.title}
+                    </Badge>
+                    <h2 className="text-4xl font-bold mb-4">
+                      {section.subtitle}
+                    </h2>
+                    <p className="text-xl text-gray-300 mb-8">
+                      {section.content}
+                    </p>
+                    <Link href={`/${section.id}`}>
+                      <Button size="lg" className="rounded-full px-8">
+                        詳しく見る
+                        <ArrowRight className="ml-2 w-5 h-5" />
+                      </Button>
+                    </Link>
+                  </motion.div>
+                </div>
+
+                {/* Navigation Hint */}
+                {index < mobileSections.length - 1 && (
+                  <motion.div
+                    className="absolute right-4 top-1/2 -translate-y-1/2"
+                    animate={{ x: [0, 10, 0] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                  >
+                    <ChevronRight className="w-8 h-8 text-white/50" />
+                  </motion.div>
+                )}
               </motion.div>
-            </div>
-          </section>
-        </>
+            ))}
+          </div>
+
+          {/* Dots Indicator */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+            {mobileSections.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  document.querySelector('.snap-x')?.scrollTo({
+                    left: index * window.innerWidth,
+                    behavior: 'smooth'
+                  })
+                }}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  activeSection === index 
+                    ? 'w-8 bg-primary' 
+                    : 'bg-white/30 hover:bg-white/50'
+                }`}
+              />
+            ))}
+          </div>
+        </section>
       ) : (
         <>
           {/* Desktop Concept Section */}

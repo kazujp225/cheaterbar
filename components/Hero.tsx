@@ -4,31 +4,15 @@ import { Button } from "@/components/ui/button"
 import { motion, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import React from "react"
 import { ChevronDown } from "lucide-react"
 import { getBlurDataURL, getOptimizedImageUrl } from "@/lib/image-utils"
 
 export default function Hero() {
-  const [currentTime, setCurrentTime] = useState("00:00")
-  const [isLoaded, setIsLoaded] = useState(false)
   const { scrollY } = useScroll()
   const y = useTransform(scrollY, [0, 500], [0, 150])
   const opacity = useTransform(scrollY, [0, 300], [1, 0])
   const titleScale = useTransform(scrollY, [0, 200], [1, 0.95])
-  
-  useEffect(() => {
-    setIsLoaded(true)
-    const updateTime = () => {
-      const now = new Date()
-      const hours = now.getHours().toString().padStart(2, '0')
-      const minutes = now.getMinutes().toString().padStart(2, '0')
-      setCurrentTime(`${hours}:${minutes}`)
-    }
-    
-    updateTime()
-    const interval = setInterval(updateTime, 1000)
-    return () => clearInterval(interval)
-  }, [])
 
   const scrollToNext = () => {
     window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })
@@ -73,18 +57,6 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Floating Time Display */}
-      <motion.div
-        className="absolute top-4 right-4 md:top-10 md:right-10 text-white/90 backdrop-blur-sm bg-black/20 p-3 md:p-4 rounded-lg"
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 1 }}
-      >
-        <div className="text-right">
-          <p className="text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] mb-1 text-primary font-medium">Tokyo</p>
-          <p className="text-xl md:text-2xl font-light tracking-wider tabular-nums">{currentTime}</p>
-        </div>
-      </motion.div>
 
       {/* Main Content */}
       <motion.div 
