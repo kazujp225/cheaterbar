@@ -91,6 +91,13 @@ html {
     overflow-x: hidden;
   }
   
+  /* Add padding for mobile bottom navigation */
+  @media (max-width: 768px) {
+    main {
+      padding-bottom: 4rem; /* Space for bottom navigation */
+    }
+  }
+  
   /* Improved focus styles for accessibility */
   *:focus {
     outline: none;

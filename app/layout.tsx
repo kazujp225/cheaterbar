@@ -4,8 +4,8 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import Header from "@/components/Header" // Import Header
 import Footer from "@/components/Footer" // Import Footer
+import FloatingNav from "@/components/FloatingNav" // Import FloatingNav
 import { ThemeProvider } from "@/components/theme-provider" // Assuming you have this
-import ScrollIndicator from "@/components/ScrollIndicator"
 import { AuthProvider } from "@/lib/auth-context"
 import { Toaster } from "@/components/ui/toaster"
 
@@ -93,7 +93,7 @@ export default function RootLayout({
         >
           <AuthProvider>
             <Header />
-            <ScrollIndicator />
+            <FloatingNav />
             <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-white px-4 py-2 rounded-md z-50">
               Skip to main content
             </a>
