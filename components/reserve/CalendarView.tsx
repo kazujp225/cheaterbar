@@ -72,7 +72,11 @@ export default function CalendarView({ onDateSelect }: CalendarViewProps) {
   }
 
   const formatDateKey = (date: Date) => {
-    return date.toISOString().split('T')[0]
+    try {
+      return date.toISOString().split('T')[0]
+    } catch {
+      return ''
+    }
   }
 
   const getAvailability = (date: Date) => {

@@ -12,6 +12,21 @@ import { useRef, useState, useEffect } from "react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { getBlurDataURL, getOptimizedImageUrl } from "@/lib/image-utils"
 
+// SSR-safe motion wrapper that suppresses hydration warnings
+const MotionDiv = ({ children, className, ...props }: any) => {
+  const [mounted, setMounted] = useState(false)
+  
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  
+  if (!mounted) {
+    return <div className={className} suppressHydrationWarning>{children}</div>
+  }
+  
+  return <motion.div className={className} {...props}>{children}</motion.div>
+}
+
 export default function Home() {
   const containerRef = useRef(null)
   const isMobile = useIsMobile()
@@ -192,10 +207,7 @@ export default function Home() {
           {/* Desktop Concept Section */}
           <section id="concept" className="relative h-screen flex items-center overflow-hidden">
             <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black to-transparent z-20" />
-            <motion.div 
-              className="absolute inset-0"
-              style={{ scale }}
-            >
+            <div className="absolute inset-0">
               <Image
                 src={getOptimizedImageUrl("https://images.unsplash.com/photo-1514933651103-005eec06c04b", 3474, 80)}
                 alt="Premium bar interior"
@@ -208,58 +220,77 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-amber-500/5" />
-            </motion.div>
+            </div>
             
             <div className="container mx-auto px-4 relative z-10">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                viewport={{ once: true }}
-                className="max-w-3xl"
-              >
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  <Badge className="inline-flex items-center gap-2 mb-4 bg-white/10 backdrop-blur-sm text-white px-4 py-2">
-                    <Sparkles className="w-4 h-4" />
-                    CONCEPT
-                  </Badge>
-                </motion.div>
-                
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
-                    Where Startup Minds
-                  </span>
-                  <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-amber-500 to-orange-500">
-                    Gather & Sprint
-                  </span>
-                </h2>
-                
-                <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed font-light">
-                  起業家の「今」と「未来」が交差する、
-                  <br className="hidden md:inline" />
-                  日本最速のビジネス創造空間。
-                </p>
-                
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href="/about">
-                    <Button size="lg" className="group bg-white text-black hover:bg-gray-100 px-8">
-                      詳しく見る
-                      <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  </Link>
-                  <Link href="/membership">
-                    <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8">
-                      会員になる
-                    </Button>
-                  </Link>
+              <div className="flex justify-center md:justify-start">
+                <div className="max-w-3xl text-center md:text-left">
+                  <MotionDiv
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    viewport={{ once: true }}
+                    className="flex justify-center md:justify-start"
+                  >
+                    <Badge className="inline-flex items-center gap-2 mb-4 bg-white/10 backdrop-blur-sm text-white px-4 py-2">
+                      <Sparkles className="w-4 h-4" />
+                      CONCEPT
+                    </Badge>
+                  </MotionDiv>
+                  
+                  <MotionDiv
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    viewport={{ once: true }}
+                    className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight"
+                  >
+                    <h2>
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
+                        Where Startup Minds
+                      </span>
+                      <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-amber-500 to-orange-500">
+                        Gather & Sprint
+                      </span>
+                    </h2>
+                  </MotionDiv>
+                  
+                  <MotionDiv
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    viewport={{ once: true }}
+                    className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed font-light"
+                  >
+                    <p>
+                      起業家の「今」と「未来」が交差する、
+                      <br className="hidden md:inline" />
+                      日本最速のビジネス創造空間。
+                    </p>
+                  </MotionDiv>
+                  
+                  <MotionDiv
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
+                    viewport={{ once: true }}
+                    className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+                  >
+                    <Link href="/about">
+                      <Button size="lg" className="group bg-white text-black hover:bg-gray-100 px-8 w-full sm:w-auto">
+                        詳しく見る
+                        <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
+                    <Link href="/membership">
+                      <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 w-full sm:w-auto">
+                        会員になる
+                      </Button>
+                    </Link>
+                  </MotionDiv>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </section>
         </>

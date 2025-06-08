@@ -40,7 +40,7 @@ export default function Header() {
   const pathname = usePathname()
 
   const navItems = [
-    { href: "/about", label: "私たちについて" },
+    { href: "/about", label: "メンター紹介" },
     { href: "/menu", label: "メニュー" },
     { href: "/events", label: "イベント" },
     { href: "/blog", label: "ブログ" },
@@ -61,8 +61,8 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? "bg-white/90 dark:bg-black/90 backdrop-blur-xl border-b border-gray-200 dark:border-white/10 shadow-2xl" 
-          : "bg-gradient-to-b from-white/50 dark:from-black/50 to-transparent"
+          ? "bg-white dark:bg-black border-b border-gray-200 dark:border-white/10 shadow-2xl" 
+          : "bg-white dark:bg-black border-b border-gray-200 dark:border-white/10"
       }`}
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-6 lg:px-8">

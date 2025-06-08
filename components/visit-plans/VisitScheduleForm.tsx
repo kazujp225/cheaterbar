@@ -62,7 +62,13 @@ export default function VisitScheduleForm({ onClose }: VisitScheduleFormProps) {
       const date = new Date()
       date.setDate(date.getDate() + i)
       days.push({
-        value: date.toISOString().split('T')[0],
+        value: (() => {
+          try {
+            return date.toISOString().split('T')[0]
+          } catch {
+            return ''
+          }
+        })(),
         label: i === 0 ? '今日' : i === 1 ? '明日' : date.toLocaleDateString('ja-JP', { 
           month: 'short', 
           day: 'numeric',

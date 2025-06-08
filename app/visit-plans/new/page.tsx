@@ -83,6 +83,7 @@ export default function NewVisitPlanPage() {
   const calculateEndTime = (startTime: string, duration: string) => {
     if (duration === '4') return null // 4時間以上の場合は終了時間を設定しない
 
+    if (!startTime || typeof startTime !== 'string') return null
     const [hours, minutes] = startTime.split(':').map(Number)
     const durationHours = parseInt(duration)
     const endHour = hours + durationHours

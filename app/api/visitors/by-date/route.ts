@@ -24,7 +24,7 @@ export async function GET(request: Request) {
 
       return {
         id: user.id,
-        name: user.profile?.full_name || user.email.split('@')[0],
+        name: user.profile?.full_name || user.email?.split('@')[0] || "Unknown",
         role: user.profile?.occupation || "メンバー",
         company: user.profile?.company || "非公開",
         matchingType: user.profile?.matching_type || "未設定",

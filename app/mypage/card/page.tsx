@@ -92,7 +92,7 @@ export default function MemberCardPage() {
               <Avatar className="h-20 w-20">
                 <AvatarImage src={profile.avatar_url || ''} alt={profile.full_name} />
                 <AvatarFallback className="text-xl">
-                  {profile.full_name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                  {profile.full_name?.split(' ').map(n => n[0]).join('').toUpperCase() || 'U'}
                 </AvatarFallback>
               </Avatar>
               <div>

@@ -25,7 +25,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { href: "/", label: "ホーム", icon: <Home className="w-5 h-5" /> },
-  { href: "/about", label: "私たちについて", icon: <Info className="w-5 h-5" /> },
+  { href: "/about", label: "メンター紹介", icon: <Info className="w-5 h-5" /> },
   { href: "/menu", label: "メニュー", icon: <MenuIcon className="w-5 h-5" /> },
   { href: "/events", label: "イベント", icon: <Calendar className="w-5 h-5" /> },
   { href: "/blog", label: "ブログ", icon: <FileText className="w-5 h-5" /> },

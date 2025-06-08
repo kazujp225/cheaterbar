@@ -25,6 +25,7 @@ const DEFAULT_STARTUP_TYPES = {
 
 export default function UserProfileCard({ profile, startupType }: UserProfileCardProps) {
   const getInitials = (name: string) => {
+    if (!name || typeof name !== 'string') return ''
     return name
       .split(' ')
       .map(n => n[0])
